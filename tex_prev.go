@@ -66,7 +66,7 @@ func main() {
 	output += "\n" + "\\end{document}"
 
 	// ファイルを書き込み用にオープン (mode=0666)
-	outFilename = "./PREVIEW_" + outFilename
+	outFilename = "./PREVIEW.tex"
 	file, err := os.Create(outFilename)
 	if err != nil {
 		panic(err)
@@ -83,7 +83,10 @@ func main() {
 		os.Exit(1)
 	}
 
-	err = exec.Command("platex", outFilename).Run()
+	texCommand := []string{"-l", "-ot", "-kanji=utf8", "-synctex=1", outFilename}
+
+	err = exec.Command("ptex2pdf", texCommand...).Run()
+
 	logfatal(err)
 
 }
