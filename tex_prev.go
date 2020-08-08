@@ -85,8 +85,11 @@ func main() {
 
 	texCommand := []string{"-l", "-ot", "-kanji=utf8", "-synctex=1", outFilename}
 
-	err = exec.Command("ptex2pdf", texCommand...).Run()
-
+	outlog, err := exec.Command("ptex2pdf", texCommand...).Output()
+	if err != nil {
+		fmt.Printf("%v", err)
+	}
+	fmt.Println(outlog)
 	logfatal(err)
 
 }
